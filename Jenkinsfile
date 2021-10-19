@@ -6,16 +6,16 @@ pipeline {
     stages {
         stage('Check version') {
             steps {
-                echo 'Cleaning..'
+                echo 'Checking..'
                 bat 'npm --version'
             }
           post{ 
           success{
-             slackSend message : 'Successfully cleaned'
+             slackSend message : 'Successfully checked'
        
             }
           failure {
-           slackSend message : 'Cleaning failed'
+           slackSend message : 'Checking failed'
         }
         }
         }
@@ -24,17 +24,44 @@ pipeline {
                 echo 'Install deps..'
                 bat 'npm install'
             }
+          post{ 
+          success{
+             slackSend message : 'Successfully installed'
+       
+            }
+          failure {
+           slackSend message : 'Installation failed'
+        }
+        }
         }
         stage('Test') {
             steps {
                 echo 'Testing..'
                 bat 'npm test'
             }
+          post{ 
+          success{
+             slackSend message : 'Successfully tested'
+       
+            }
+          failure {
+           slackSend message : 'Testing failed'
+        }
+        }
         }
         stage('Package') {
             steps {
                 echo 'npm build'
             }
+          post{ 
+          success{
+             slackSend message : 'Successfully build'
+       
+            }
+          failure {
+           slackSend message : 'Building failed'
+        }
+        }
         }
     }
 }
